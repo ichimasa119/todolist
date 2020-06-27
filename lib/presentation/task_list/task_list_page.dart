@@ -20,6 +20,21 @@ class TaskListPage extends StatelessWidget {
               .map(
                 (task) => ListTile(
                   title: Text(task.title),
+                  trailing: IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () async {
+                      // todo : add_task_page
+                      await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddTaskPage(
+                            task: task,
+                          ),
+                          fullscreenDialog: true,
+                        ),
+                      );
+                    },
+                  ),
                 ),
               )
               .toList();

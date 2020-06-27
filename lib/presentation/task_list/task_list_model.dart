@@ -7,7 +7,7 @@ class TaskListModel extends ChangeNotifier {
   // Firebaseからデータを抽出
   Future fetchTasks() async {
     final docs = await Firestore.instance.collection('tasks').getDocuments();
-    final tasks = docs.documents.map((doc) => Task(doc['title'])).toList();
+    final tasks = docs.documents.map((doc) => Task(doc)).toList();
     this.tasks = tasks;
     notifyListeners();
   }
