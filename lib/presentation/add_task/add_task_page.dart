@@ -98,7 +98,7 @@ class AddTaskPage extends StatelessWidget {
 
   Future updateTask(AddTaskModel model, BuildContext context) async {
     try {
-      // todo: firestoreにタスクを追加
+      // todo: firestoreにタスクを編集
       await model.updateTask(task);
       await showDialog(
         context: context,
