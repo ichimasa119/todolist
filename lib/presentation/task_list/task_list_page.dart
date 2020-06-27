@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todolistapp/domain/task.dart';
 import 'package:todolistapp/presentation/add_task/add_task_page.dart';
 import 'package:todolistapp/presentation/task_list/task_list_model.dart';
 
@@ -33,8 +34,31 @@ class TaskListPage extends StatelessWidget {
                           fullscreenDialog: true,
                         ),
                       );
+                      model.fetchTasks(); // リアルタイムに反映させる
                     },
                   ),
+                  onLongPress: () async {
+                    // TODO: 長押しでタスク削除
+                    await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('${task.title}を削除しますか'),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text('OK'),
+                              onPressed: () async {
+                                Navigator.of(context).pop();
+
+                                // TODO : 削除のAPIを叩く
+                                await deleteTask(context, model, task);
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
                 ),
               )
               .toList();
@@ -52,11 +76,23 @@ class TaskListPage extends StatelessWidget {
                   fullscreenDialog: true,
                 ),
               );
-              model.fetchTasks();
+              model.fetchTasks(); // リアルタイムに反映させる
             },
           );
         }),
       ),
     );
+  }
+
+  Future deleteTask(
+      BuildContext context, TaskListModel model, Task task) async {
+    try {
+      // todo: firestoreにタスクを削除
+      await model.deleteTask(task);
+      await model.fetchTasks();
+    } catch (e) {
+      // await _showDialog(context, e.toString());
+      print(e.toString());
+    }
   }
 }
