@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todolistapp/task_list_page.dart';
+import 'package:todolistapp/presentation/task_list/task_list_page.dart';
 
 import 'main_model.dart';
 
